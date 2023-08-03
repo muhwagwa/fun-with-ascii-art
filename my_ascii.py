@@ -35,7 +35,8 @@ if __name__ == "__main__":
         # check file extension
         if img_file.endswith(".png"):
             img_file = png_to_jpg(img_file)
-        elif not img_file.endswith(".jpg"):
+        elif not img_file.endswith(".jpg") and not img_file.endswith(".jpeg"):
+            print(img_file + " is not an image file")
             return
 
         img = ImageObj(img_file, int(args.width))
