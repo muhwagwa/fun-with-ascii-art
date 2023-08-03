@@ -3,7 +3,7 @@ from PIL import Image, ImageOps
 
 from tile import Tile
 from ImageObj import ImageObj
-from HTMLSettings import HEADER, FOOTER
+from html_settings import HEADER, FOOTER
 
 
 class AsciiConverter:
