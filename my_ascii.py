@@ -28,7 +28,7 @@ if __name__ == "__main__":
         "--style",
         dest="style",
         required=True,
-        choices=["bw", "color", "emoji", "line", "test", "four", "replace"],
+        choices=["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"],
     )
     parser.add_argument(
         "--out", dest="out", required=True, choices=["html", "terminal"]

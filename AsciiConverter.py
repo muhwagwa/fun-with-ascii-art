@@ -3,7 +3,7 @@ from PIL import Image, ImageOps
 
 from tile import Tile
 from ImageObj import ImageObj
-from html_settings import HEADER, FOOTER
+from constants import HEADER, FOOTER
 
 
 class AsciiConverter:
@@ -35,41 +35,43 @@ class AsciiConverter:
             self.input.to_four_level_numpy(self.input.bw_numpy)
         )
 
-        if self.out == "terminal":
-            self.to_terminal()
-        elif self.out == "html":
-            match self.style:
-                case "line":
-                    self.to_html(color=False, style="line")
-                case "color":
-                    self.to_html(color=True, style="default")
+        self.write_ascii(self.style, self.out)
+
+    def write_ascii(self, style, out):
+        def write_html_line():
+            match style:
                 case "bw":
-                    self.to_html(color=False, style="default")
+                    html_file.write(
+                        '<span style="color: rgb('
+                        + str(tile.chosen)
+                        + ", "
+                        + str(tile.chosen)
+                        + ", "
+                        + str(tile.chosen)
+                        + ');">'
+                        + str(alphabet)
+                        + "</span>"
+                    )
+                case "line":
+                    html_file.write("<span>" + alphabet + "</span>")
                 case "emoji":
-                    self.to_html(color=False, style="emoji")
-                case "test":
-                    self.to_html(color=True, style="test")
+                    html_file.write("<span>&#" + alphabet + "</span>")
+                case "color":
+                    html_file.write(
+                        '<span style="color: rgb('
+                        + str(color[0])
+                        + ", "
+                        + str(color[1])
+                        + ", "
+                        + str(color[2])
+                        + ');">'
+                        + str(alphabet)
+                        + "</span>"
+                    )
 
-    def to_terminal(self):
-        for row_num, row in enumerate(self.input.grayscale_numpy):
-            if row_num % 2 == 1:
-                pass
-            else:
-                for col_num, element in enumerate(row):
-                    if col_num % 2 == 1:
-                        pass
-                    else:
-                        row1_col1 = element
-                        row1_col2 = row[col_num + 1]
-                        row2_col1 = self.input.grayscale_numpy[row_num + 1][col_num]
-                        row2_col2 = self.input.grayscale_numpy[row_num + 1][col_num + 1]
-                        tile = Tile([row1_col1, row1_col2, row2_col1, row2_col2])
-                        tile.convert_to_terminal()
-                print("")
-
-    def to_html(self, color, style):
-        html_file = open("result/" + style + ".html", "w")
-        html_file.write(HEADER)
+        if out == "html":
+            html_file = open("result/" + style + ".html", "w")
+            html_file.write(HEADER)
 
         # tiling
         for row_num, row in enumerate(self.input.grayscale_numpy):
@@ -82,15 +84,9 @@ class AsciiConverter:
                         row2_col2 = self.input.grayscale_numpy[row_num + 1][col_num + 1]
                         input_array = [row1_col1, row1_col2, row2_col1, row2_col2]
                         tile = Tile(input_array)
+                        alphabet = tile.convert_to_char(style)
 
-                        # color
-                        if color:
-                            match style:
-                                case "default":
-                                    alphabet = tile.convert_to_char(style)
-                                case "test":
-                                    alphabet = tile.convert_to_char(style)
-
+                        if style == "color":
                             color_array = [
                                 self.input.color_numpy[row_num][col_num],
                                 self.input.color_numpy[row_num][col_num + 1],
@@ -110,42 +106,14 @@ class AsciiConverter:
                                             break
                                         color[index] += color_value / tile.max_frequency
 
-                            html_file.write(
-                                '<span style="color: rgb('
-                                + str(color[0])
-                                + ", "
-                                + str(color[1])
-                                + ", "
-                                + str(color[2])
-                                + ');">'
-                                + str(alphabet)
-                                + "</span>"
-                            )
+                        if out == "html":
+                            write_html_line()
 
-                        # black and white
-                        else:
-                            match style:
-                                case "default":
-                                    alphabet = tile.convert_to_char(style)
-                                    html_file.write(
-                                        '<span style="color: rgb('
-                                        + str(tile.chosen)
-                                        + ", "
-                                        + str(tile.chosen)
-                                        + ", "
-                                        + str(tile.chosen)
-                                        + ');">'
-                                        + str(alphabet)
-                                        + "</span>"
-                                    )
-                                case "line":
-                                    alphabet = tile.convert_to_char(style)
-                                    html_file.write("<span>" + alphabet + "</span>")
-                                case "emoji":
-                                    alphabet = tile.convert_to_char(style)
-                                    html_file.write("<span>&#" + alphabet + "</span>")
+                if out == "terminal":
+                    print("")
+                else:
+                    html_file.write("<br />\n")
 
-                html_file.write("<br />\n")
-
-        html_file.write(FOOTER)
-        html_file.close()
+        if out == "html":
+            html_file.write(FOOTER)
+            html_file.close()
