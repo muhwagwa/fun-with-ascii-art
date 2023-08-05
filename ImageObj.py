@@ -5,6 +5,7 @@ class ImageObj:
     def __init__(self, input_file, width):
         self.input_file = input_file
         self.width = width
+        self.name = input_file.split("/")[-1].split(".")[0]
 
     def set_color_numpy(self, color_numpy):
         self.color_numpy = color_numpy

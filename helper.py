@@ -1,6 +1,6 @@
 import cv2
 from PIL import Image
-from constants import PERMITTED_EXTENSION
+from constants import IMG_EXTENSION, VIDEO_EXTENSION
 import os
 
 
@@ -11,9 +11,16 @@ def png_to_jpg(img_file):
     return new_file_name
 
 
-def check_file_extension(file):
+def is_image_file(file):
     extension = file.split(".")[-1]
-    if extension in PERMITTED_EXTENSION:
+    if extension in IMG_EXTENSION:
+        return True
+    return False
+
+
+def is_video_file(file):
+    extension = file.split(".")[-1]
+    if extension in VIDEO_EXTENSION:
         return True
     return False
 

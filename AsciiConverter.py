@@ -70,7 +70,7 @@ class AsciiConverter:
                     )
 
         if out == "html":
-            html_file = open("result/" + style + ".html", "w")
+            html_file = open("result/" + self.input.name + "_" + style + ".html", "w")
             html_file.write(HEADER)
 
         # tiling
