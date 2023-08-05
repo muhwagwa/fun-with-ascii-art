@@ -1,4 +1,5 @@
-PERMITTED_EXTENSION = ["png", "jpg", "jpeg"]
+IMG_EXTENSION = ["png", "jpg", "jpeg"]
+VIDEO_EXTENSION = ["mov", "mp3", "avi"]
 HEADER = """
         <!DOCTYPE html>
         <html>
