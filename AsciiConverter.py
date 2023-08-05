@@ -7,10 +7,11 @@ from constants import HEADER, FOOTER
 
 
 class AsciiConverter:
-    def __init__(self, input: ImageObj, out: str, style: str):
+    def __init__(self, input: ImageObj, out: str, style: str, out_dir):
         self.input = input
         self.out = out
         self.style = style
+        self.out_dir = out_dir
 
     def convert(self):
         # 1. open image
@@ -70,7 +71,9 @@ class AsciiConverter:
                     )
 
         if out == "html":
-            html_file = open("result/" + self.input.name + "_" + style + ".html", "w")
+            html_file = open(
+                self.out_dir + self.input.name + "_" + style + ".html", "w"
+            )
             html_file.write(HEADER)
 
         # tiling
