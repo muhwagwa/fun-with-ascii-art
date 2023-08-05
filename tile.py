@@ -66,7 +66,12 @@ class Tile:
     def convert_to_char(self, style):
         self.create_check_array()
         match style:
-            case "default":
+            case "terminal":
+                alphabet = tables.default(self.check)
+                self.print_terminal(alphabet)
+            case "bw":
+                return tables.default(self.check)
+            case "color":
                 return tables.default(self.check)
             case "test":
                 return tables.test(self.check)

@@ -1,3 +1,4 @@
+PERMITTED_EXTENSION = ["png", "jpg", "jpeg"]
 HEADER = """
         <!DOCTYPE html>
         <html>

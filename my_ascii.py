@@ -1,29 +1,34 @@
 import argparse
 import os
-from PIL import Image
 from ImageObj import ImageObj
 from AsciiConverter import AsciiConverter
+from helper import png_to_jpg, check_file_extension
 
 
-def png_to_jpg(img_file):
-    img = Image.open(img_file).convert("RGB")
-    new_file_name = img_file[:-4] + ".jpg"
-    img.save(new_file_name, "jpeg")
-    return new_file_name
+def convert_img(img_file):
+    if img_file.endswith(".png"):
+        img_file = png_to_jpg(img_file)
+    if not check_file_extension(img_file):
+        print(img_file + " is not an image file")
+        return
+
+    img = ImageObj(img_file, int(args.width))
+    converter = AsciiConverter(img, args.out, args.style)
+    converter.convert()
 
 
 if __name__ == "__main__":
-    # create arg parser
+    # create an arg parser
     DESCRIPTION = "Image to ASCII Art Converter"
     parser = argparse.ArgumentParser(description=DESCRIPTION)
 
-    parser.add_argument("--file", dest="imgFile", required=True)
+    parser.add_argument("--file", dest="img_file", required=True)
     parser.add_argument("--width", dest="width", required=True)
     parser.add_argument(
         "--style",
         dest="style",
         required=True,
-        choices=["bw", "color", "emoji", "line", "test", "four", "replace"],
+        choices=["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"],
     )
     parser.add_argument(
         "--out", dest="out", required=True, choices=["html", "terminal"]
@@ -31,26 +36,14 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    def convert_img(img_file):
-        # check file extension
-        if img_file.endswith(".png"):
-            img_file = png_to_jpg(img_file)
-        elif not img_file.endswith(".jpg") and not img_file.endswith(".jpeg"):
-            print(img_file + " is not an image file")
-            return
-
-        img = ImageObj(img_file, int(args.width))
-        converter = AsciiConverter(img, args.out, args.style)
-        converter.convert()
-
-    # file
-    if os.path.isfile(args.imgFile):
-        convert_img(args.imgFile)
-    # directory
+    # if img_file is a file
+    if os.path.isfile(args.img_file):
+        convert_img(args.img_file)
+    # if img_file is a directory
     else:
-        files = os.listdir(args.imgFile)
+        files = os.listdir(args.img_file)
         files.sort()
         for file in files:
-            filename = args.imgFile + "/" + file
+            filename = args.img_file + "/" + file
             print(filename)
             convert_img(filename)
