@@ -1,4 +1,27 @@
-def default(check):
+"""Converting Tables
+Tables for converting array to an ASCII letter
+
+This file can also be imported as a module and contains the following
+functions:
+
+    * default : default table
+    * test : test table
+    * korean : table with korean characters
+    * line : line table with horizontal, vertical and diagonal lines
+    * line2 : line table with '_' only
+    * emoji : apple emoji table
+"""
+
+
+def default(check: list):
+    """Default table
+
+    Args:
+        check (list): Info of a 2x2 tile
+
+    Returns:
+        str: ASCII letter
+    """
     result = ""
     match check:
         case [0, 0, 0, 1]:
@@ -34,13 +57,29 @@ def default(check):
     return result
 
 
-def test(check):
+def test(check: list):
+    """Test table
+
+    Args:
+        check (list): Info of a 2x2 tile
+
+    Returns:
+        str: ASCII letter
+    """
     if check == [1, 1, 1, 1]:
         return "&nbsp;"
     return "8"
 
 
-def korean(check):
+def korean(check: list):
+    """Table with korean characters
+
+    Args:
+        check (list): Info of a 2x2 tile
+
+    Returns:
+        str: ASCII letter
+    """
     result = ""
     match check:
         case [0, 0, 0, 1]:
@@ -76,7 +115,15 @@ def korean(check):
     return result
 
 
-def line(check):
+def line(check: list):
+    """Line table with horizontal, vertical and diagonal lines
+
+    Args:
+        check (list): Info of a 2x2 tile
+
+    Returns:
+        str: ASCII letter
+    """
     result = ""
     match check:
         case [0, 0, 0, 1]:
@@ -112,13 +159,29 @@ def line(check):
     return result
 
 
-def line2(check):
+def line2(check: list):
+    """Line table with '_' only
+
+    Args:
+        check (list): Info of a 2x2 tile
+
+    Returns:
+        str: ASCII letter
+    """
     if check == [1, 1, 1, 1]:
         return "&nbsp;"
     return "-"
 
 
-def emoji(check):
+def emoji(check: list):
+    """Apple emoji table
+
+    Args:
+        check (list): Info of a 2x2 tile
+
+    Returns:
+        str: ASCII letter
+    """
     result = ""
     match check:
         case [0, 0, 0, 1]:
