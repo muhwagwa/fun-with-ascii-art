@@ -2,6 +2,8 @@ import cv2
 from PIL import Image
 from constants import IMG_EXTENSION, VIDEO_EXTENSION
 import os
+import glob
+import imgkit
 
 
 def png_to_jpg(img_file):
@@ -20,13 +22,6 @@ def check_input_type(path):
             return "video"
         return "na"
     return "folder"
-
-
-def is_image_file(file):
-    extension = file.split(".")[-1]
-    if extension in IMG_EXTENSION:
-        return True
-    return False
 
 
 def get_file_name(path, prefix="", postfix=""):
@@ -52,3 +47,23 @@ def video_to_frames(video_file):
         success, image = vidcap.read()
         print("Read a new frame: ", success)
         count += 1
+
+
+def html_to_video(dir):
+    img_array = []
+    for filename in glob.glob(dir + "*.html"):
+        img_file = filename.split(".")[0] + ".jpg"
+        imgkit.from_file(filename, img_file)
+        img = cv2.imread(img_file)
+        img_array.append(img)
+
+    size = (img_array[0].shape[0], img_array[0].shape[1])
+
+    out = cv2.VideoWriter(
+        "result/project.avi", cv2.VideoWriter_fourcc(*"DIVX"), 15, size
+    )
+
+    for i in range(len(img_array)):
+        out.write(img_array[i])
+
+    out.release()

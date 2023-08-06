@@ -1,26 +1,20 @@
 import argparse
-import glob
 import os
-import cv2
-import imgkit
 from ImageObj import ImageObj
 from AsciiConverter import AsciiConverter
 from helper import (
     png_to_jpg,
     video_to_frames,
-    is_image_file,
     check_input_type,
     get_file_name,
     create_folder,
+    html_to_video,
 )
 
 
 def convert_img(img_file, width, out, style, out_dir):
     if img_file.endswith(".png"):
         img_file = png_to_jpg(img_file)
-    if not is_image_file(img_file):
-        print(img_file + " is not an image file")
-        return
 
     img = ImageObj(img_file, int(width))
     converter = AsciiConverter(img, out, style, out_dir)
@@ -49,43 +43,28 @@ def parse_arg():
     input_file = args.input_file
     input_type = check_input_type(args.input_file)
 
-    if input_type == "video":
-        video_to_frames(args.input_file)
-        input_file = get_file_name(input_file, "result/", "_frame/")
-
-    # if input_file is a file
-    if input_type == "img":
+    if input_type == "na":
+        print("Check your input file type")
+        return
+    elif input_type == "img":
         convert_img(input_file, args.width, args.out, args.style, "result/")
-    # if input_file is a directory
-    elif input_type == "folder" or input_type == "video":
+    else:
+        if input_type == "video":
+            video_to_frames(input_file)
+            input_file = get_file_name(input_file, "result/", "_frame/")
+            destination = input_file[:-1] + "_ascii/"
+        elif input_type == "folder":
+            destination = "result/" + input_file[:-1] + "_ascii/"
         files = os.listdir(input_file)
         files.sort()
-        destination = input_file[:-1] + "_ascii/"
         create_folder(destination)
         for file in files:
             filename = input_file + file
-            print(filename)
+            print("Converting " + filename + " to ascii.")
             convert_img(filename, args.width, args.out, args.style, destination)
 
-    if input_type == "video":
-        img_array = []
-        dir = input_file[:-1] + "_ascii/"
-        for filename in glob.glob(dir + "*.html"):
-            img_file = filename.split(".")[0] + ".jpg"
-            imgkit.from_file(filename, img_file)
-            img = cv2.imread(img_file)
-            height, width, layer = img.shape
-            size = (width, height)
-            img_array.append(img)
-
-        out = cv2.VideoWriter(
-            "result/project.avi", cv2.VideoWriter_fourcc(*"DIVX"), 15, size
-        )
-
-        for i in range(len(img_array)):
-            out.write(img_array[i])
-
-        out.release()
+        if input_type == "video":
+            html_to_video(input_file[:-1] + "_ascii/")
 
 
 if __name__ == "__main__":
