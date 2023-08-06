@@ -15,6 +15,7 @@ import os
 import glob
 import cv2
 from PIL import Image
+from pytube import YouTube
 import imgkit
 from constants import IMG_EXTENSION, VIDEO_EXTENSION
 
@@ -121,3 +122,17 @@ def html_to_video(folder: str):
         out.write(img)
 
     out.release()
+
+
+def extract_youtube_audio(url: str):
+    """Extracts audio from a youtube video
+
+    Args:
+        url (str): Url of the video
+    """
+    selected_video = YouTube(url)
+
+    audio = selected_video.streams.filter(only_audio=True, file_extension="mp4")[1]
+    print(audio)
+
+    audio.download()

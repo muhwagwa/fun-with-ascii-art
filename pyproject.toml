@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "fun-with-ascii-art"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "fun_with_ascii_art"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+numpy = "^1.25.2"
+pillow = "^10.0.0"
+colorama = "^0.4.6"
+opencv-python = "^4.8.0.74"
+imgkit = "^1.2.3"
+pylint = "^2.17.5"
+black = "^23.7.0"
+pytube = "^15.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
