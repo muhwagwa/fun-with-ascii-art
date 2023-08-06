@@ -24,9 +24,8 @@ class AsciiConverter:
         out_dir (str): Path to put the output file.
     """
 
-    def __init__(self, input_img: ImageObj, out: str, style: str, out_dir: str):
+    def __init__(self, input_img: ImageObj, style: str, out_dir: str):
         self.input_img = input_img
-        self.out = out
         self.style = style
         self.out_dir = out_dir
 
@@ -54,14 +53,13 @@ class AsciiConverter:
             self.input_img.to_four_level_numpy(self.input_img.bw_numpy)
         )
 
-        self.write_ascii(self.style, self.out)
+        self.write_ascii(self.style)
 
-    def write_ascii(self, style, out):
+    def write_ascii(self, style):
         """Writes the result ascii to terminal or an html file
 
         Args:
             style (str): Desired style of Ascii converting.
-            out (str): Desired format of the output file.
         """
 
         def write_html_line():
@@ -95,7 +93,7 @@ class AsciiConverter:
                         + "</span>"
                     )
 
-        if out == "html":
+        if style != "terminal":
             html_file = open(
                 self.out_dir + self.input_img.name + "_" + style + ".html", "w"
             )
@@ -136,14 +134,14 @@ class AsciiConverter:
                                             break
                                         color[index] += color_value / tile.max_frequency
 
-                        if out == "html":
+                        if style == "terminal":
                             write_html_line()
 
-                if out == "terminal":
+                if style == "terminal":
                     print("")
                 else:
                     html_file.write("<br />\n")
 
-        if out == "html":
+        if style != "terminal":
             html_file.write(FOOTER)
             html_file.close()
