@@ -1,0 +1,13 @@
+*.lock
+.DS_Store
+__pycache__
+
+# ignore img, video, html files
+*.jpg
+*.jpeg
+*.html
+
+# ignore directory wuth input and results
+img/
+video/
+result/
