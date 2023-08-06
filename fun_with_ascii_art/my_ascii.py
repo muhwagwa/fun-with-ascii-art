@@ -23,25 +23,23 @@ from helper import (
     html_to_video,
 )
 
-Out = ["html", "terminal", "video"]
-Style = ["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"]
+STYLE = ["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"]
 
 
-def convert_img(img_file: str, width: int, out: Out, style: Style, out_dir: str):
+def convert_img(img_file: str, width: int, style: STYLE, out_dir: str):
     """Creates and runs a AsciiConverter
 
     Args:
     img_file (str): Path to the image file
     width (int): Desired width of the output
-    out (["html", "terminal", "video"]): Desired format of the output file
-    style (["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"]): Desired style of Ascii converting
+    style (Style): Desired style of Ascii converting
     out_dir (str): Path to put the output file
     """
     if img_file.endswith(".png"):
         img_file = png_to_jpg(img_file)
 
     img = ImageObj(img_file, int(width))
-    converter = AsciiConverter(img, out, style, out_dir)
+    converter = AsciiConverter(img, style, out_dir)
     converter.convert()
 
 
@@ -57,10 +55,7 @@ def parse_arg():
         "--style",
         dest="style",
         required=True,
-        choices=["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"],
-    )
-    parser.add_argument(
-        "--out", dest="out", required=True, choices=["html", "terminal", "video"]
+        choices=STYLE,
     )
 
     args = parser.parse_args()
@@ -72,7 +67,7 @@ def parse_arg():
         print("Check your input file type")
         return
     if input_type == "img":
-        convert_img(input_file, args.width, args.out, args.style, "result/")
+        convert_img(input_file, args.width, args.style, "result/")
     else:
         if input_type == "video":
             video_to_frames(input_file)
@@ -82,11 +77,12 @@ def parse_arg():
             destination = "result/" + input_file[:-1] + "_ascii/"
         files = os.listdir(input_file)
         files.sort()
-        create_folder(destination)
+        if args.style != "terminal":
+            create_folder(destination)
         for file in files:
             filename = input_file + file
             print("Converting " + filename + " to ascii.")
-            convert_img(filename, args.width, args.out, args.style, destination)
+            convert_img(filename, args.width, args.style, destination)
 
         if input_type == "video":
             html_to_video(input_file[:-1] + "_ascii/")

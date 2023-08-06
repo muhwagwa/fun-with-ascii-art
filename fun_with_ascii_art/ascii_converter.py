@@ -24,9 +24,8 @@ class AsciiConverter:
         out_dir (str): Path to put the output file.
     """
 
-    def __init__(self, input_img: ImageObj, out: str, style: str, out_dir: str):
+    def __init__(self, input_img: ImageObj, style: str, out_dir: str):
         self.input_img = input_img
-        self.out = out
         self.style = style
         self.out_dir = out_dir
 
@@ -54,18 +53,13 @@ class AsciiConverter:
             self.input_img.to_four_level_numpy(self.input_img.bw_numpy)
         )
 
-        self.write_ascii(self.style, self.out)
+        self.write_ascii()
 
-    def write_ascii(self, style, out):
-        """Writes the result ascii to terminal or an html file
-
-        Args:
-            style (str): Desired style of Ascii converting.
-            out (str): Desired format of the output file.
-        """
+    def write_ascii(self):
+        """Writes the result ascii to terminal or an html file"""
 
         def write_html_line():
-            match style:
+            match self.style:
                 case "bw":
                     html_file.write(
                         '<span style="color: rgb('
@@ -95,9 +89,9 @@ class AsciiConverter:
                         + "</span>"
                     )
 
-        if out == "html":
+        if self.style != "terminal":
             html_file = open(
-                self.out_dir + self.input_img.name + "_" + style + ".html", "w"
+                self.out_dir + self.input_img.name + "_" + self.style + ".html", "w"
             )
             html_file.write(HEADER)
 
@@ -106,17 +100,20 @@ class AsciiConverter:
             if row_num % 2 != 1:
                 for col_num, element in enumerate(row):
                     if col_num % 2 != 1:
-                        row1_col1 = element
-                        row1_col2 = row[col_num + 1]
-                        row2_col1 = self.input_img.grayscale_numpy[row_num + 1][col_num]
-                        row2_col2 = self.input_img.grayscale_numpy[row_num + 1][
+                        # input_array = [row1_col1, row1_col2, row2_col1, row2_col2]
+                        input_array = [0, 0, 0, 0]
+                        input_array[0] = element
+                        input_array[1] = row[col_num + 1]
+                        input_array[2] = self.input_img.grayscale_numpy[row_num + 1][
+                            col_num
+                        ]
+                        input_array[3] = self.input_img.grayscale_numpy[row_num + 1][
                             col_num + 1
                         ]
-                        input_array = [row1_col1, row1_col2, row2_col1, row2_col2]
                         tile = Tile(input_array)
-                        alphabet = tile.convert_to_char(style)
+                        alphabet = tile.convert_to_char(self.style)
 
-                        if style == "color":
+                        if self.style == "color":
                             color_array = [
                                 self.input_img.color_numpy[row_num][col_num],
                                 self.input_img.color_numpy[row_num][col_num + 1],
@@ -136,14 +133,14 @@ class AsciiConverter:
                                             break
                                         color[index] += color_value / tile.max_frequency
 
-                        if out == "html":
+                        if self.style != "terminal":
                             write_html_line()
 
-                if out == "terminal":
+                if self.style == "terminal":
                     print("")
                 else:
                     html_file.write("<br />\n")
 
-        if out == "html":
+        if self.style != "terminal":
             html_file.write(FOOTER)
             html_file.close()

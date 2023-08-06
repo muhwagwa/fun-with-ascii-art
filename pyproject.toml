@@ -17,6 +17,12 @@ pylint = "^2.17.5"
 black = "^23.7.0"
 pytube = "^15.0.0"
 
+[tool.pylint.messages_control]
+disable = [
+    "import-error",
+    "no-member"
+]
+
 
 [build-system]
 requires = ["poetry-core"]
