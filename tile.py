@@ -18,10 +18,7 @@ class Tile:
         input_array (list): List of initial cell values.
         color_array (list): List of rgb values of the cells in the tile.
         check (list): List of binary cell values.
-        count0 (int): No. of cells with value 0.
-        count70 (int): No. of cells with value 70.
-        count140 (int): No. of cells with value 140.
-        count210 (int): No. of cells with value 210.
+        count (list): No. of cells each with value 0, 70, 140 and 210.
         max_frequency (int): Maximum frequency of the cell values in a tile.
         chosen (int): Cell value with maximum frequency.
     """
@@ -30,38 +27,18 @@ class Tile:
         self.input_array = input_array
         self.color_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.check = [0, 0, 0, 0]
-        self.count0 = 0
-        self.count70 = 0
-        self.count140 = 0
-        self.count210 = 0
+        self.count = [0, 0, 0, 0]
         self.max_frequency = 0
         self.chosen = 0
 
     def create_check_array(self):
         """Create an array that holds shape info for a 2x2 tile"""
         for elem in self.input_array:
-            match elem:
-                case 0:
-                    self.count0 += 1
-                case 70:
-                    self.count70 += 1
-                case 140:
-                    self.count140 += 1
-                case 210:
-                    self.count210 += 1
+            self.count[int(elem / 70)] += 1
 
-        self.max_frequency = max(
-            self.count0, self.count70, self.count140, self.count210
-        )
-
-        if self.count0 == self.max_frequency:
-            self.chosen = 0
-        elif self.count70 == self.max_frequency:
-            self.chosen = 70
-        elif self.count140 == self.max_frequency:
-            self.chosen = 140
-        elif self.count210 == self.max_frequency:
-            self.chosen = 210
+        self.max_frequency = max(self.count)
+        max_index = self.count.index(self.max_frequency)
+        self.chosen = 70 * max_index
 
         for index, elem in enumerate(self.input_array):
             if elem == self.chosen:
@@ -76,16 +53,13 @@ class Tile:
         match self.chosen:
             case 0:
                 print(Fore.BLACK + Style.NORMAL + alphabet, end="")
-                print(Style.RESET_ALL, end="")
             case 70:
                 print(Fore.BLACK + Style.BRIGHT + alphabet, end="")
-                print(Style.RESET_ALL, end="")
             case 140:
                 print(Fore.WHITE + Style.NORMAL + alphabet, end="")
-                print(Style.RESET_ALL, end="")
             case 210:
                 print(Fore.WHITE + Style.BRIGHT + alphabet, end="")
-                print(Style.RESET_ALL, end="")
+        print(Style.RESET_ALL, end="")
 
     def convert_to_char(self, style: str):
         """Convert 2x2 tile info to ascii char
