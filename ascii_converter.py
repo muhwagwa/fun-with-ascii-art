@@ -10,7 +10,7 @@ import numpy as np
 from PIL import Image, ImageOps
 
 from tile import Tile
-from ImageObj import ImageObj
+from image_obj import ImageObj
 from constants import HEADER, FOOTER
 
 

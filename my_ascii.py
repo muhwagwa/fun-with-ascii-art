@@ -10,12 +10,10 @@ functions:
     * convert_img : Convert PNG to JPG and creates/runs a converter
     * parse_arg : parses input args depending on the input file type
 """
-
-
 import argparse
 import os
-from ImageObj import ImageObj
-from AsciiConverter import AsciiConverter
+from image_obj import ImageObj
+from ascii_converter import AsciiConverter
 from helper import (
     png_to_jpg,
     video_to_frames,
