@@ -56,8 +56,7 @@ class AsciiConverter:
         self.write_ascii()
 
     def write_ascii(self):
-        """Writes the result ascii to terminal or an html file
-        """
+        """Writes the result ascii to terminal or an html file"""
 
         def write_html_line():
             match self.style:
@@ -101,13 +100,16 @@ class AsciiConverter:
             if row_num % 2 != 1:
                 for col_num, element in enumerate(row):
                     if col_num % 2 != 1:
-                        row1_col1 = element
-                        row1_col2 = row[col_num + 1]
-                        row2_col1 = self.input_img.grayscale_numpy[row_num + 1][col_num]
-                        row2_col2 = self.input_img.grayscale_numpy[row_num + 1][
+                        # input_array = [row1_col1, row1_col2, row2_col1, row2_col2]
+                        input_array = [0, 0, 0, 0]
+                        input_array[0] = element
+                        input_array[1] = row[col_num + 1]
+                        input_array[2] = self.input_img.grayscale_numpy[row_num + 1][
+                            col_num
+                        ]
+                        input_array[3] = self.input_img.grayscale_numpy[row_num + 1][
                             col_num + 1
                         ]
-                        input_array = [row1_col1, row1_col2, row2_col1, row2_col2]
                         tile = Tile(input_array)
                         alphabet = tile.convert_to_char(self.style)
 

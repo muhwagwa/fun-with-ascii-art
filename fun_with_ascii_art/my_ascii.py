@@ -23,16 +23,16 @@ from helper import (
     html_to_video,
 )
 
-Style = ["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"]
+STYLE = ["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"]
 
 
-def convert_img(img_file: str, width: int, style: Style, out_dir: str):
+def convert_img(img_file: str, width: int, style: STYLE, out_dir: str):
     """Creates and runs a AsciiConverter
 
     Args:
     img_file (str): Path to the image file
     width (int): Desired width of the output
-    style (["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"]): Desired style of Ascii converting
+    style (Style): Desired style of Ascii converting
     out_dir (str): Path to put the output file
     """
     if img_file.endswith(".png"):
@@ -55,7 +55,7 @@ def parse_arg():
         "--style",
         dest="style",
         required=True,
-        choices=["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"],
+        choices=STYLE,
     )
 
     args = parser.parse_args()
