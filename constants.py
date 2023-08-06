@@ -1,3 +1,15 @@
+"""Constants
+List of constants used in this app.
+
+This file can also be imported as a module and contains the following constants:
+
+    * IMG_EXTENSION : Permitted img extensions
+    * VIDEO_EXTENSION : Permitted video extensions
+    * HEADER : HTML header
+    * FOOTER : HTML footer
+"""
+
+
 IMG_EXTENSION = ["png", "jpg", "jpeg"]
 VIDEO_EXTENSION = ["mov", "mp3", "avi"]
 HEADER = """
