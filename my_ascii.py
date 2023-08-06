@@ -1,3 +1,17 @@
+"""Arg Parser
+Parse given inputs and run the Ascii converter.
+
+You can run this script by running a code like below
+python3 my_ascii.py --file img/sohee.jpg --width 40 --style color --out html
+
+This file can also be imported as a module and contains the following
+functions:
+
+    * convert_img : Convert PNG to JPG and creates/runs a converter
+    * parse_arg : parses input args depending on the input file type
+"""
+
+
 import argparse
 import os
 from ImageObj import ImageObj
@@ -11,8 +25,20 @@ from helper import (
     html_to_video,
 )
 
+Out = ["html", "terminal", "video"]
+Style = ["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"]
 
-def convert_img(img_file, width, out, style, out_dir):
+
+def convert_img(img_file: str, width: int, out: Out, style: Style, out_dir: str):
+    """Creates and runs a AsciiConverter
+
+    Args:
+    img_file (str): Path to the image file
+    width (int): Desired width of the output
+    out (["html", "terminal", "video"]): Desired format of the output file
+    style (["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"]): Desired style of Ascii converting
+    out_dir (str): Path to put the output file
+    """
     if img_file.endswith(".png"):
         img_file = png_to_jpg(img_file)
 
@@ -22,9 +48,10 @@ def convert_img(img_file, width, out, style, out_dir):
 
 
 def parse_arg():
+    """Parses user input args"""
     # create an arg parser
-    DESCRIPTION = "Image to ASCII Art Converter"
-    parser = argparse.ArgumentParser(description=DESCRIPTION)
+    description = "Image to ASCII Art Converter"
+    parser = argparse.ArgumentParser(description=description)
 
     parser.add_argument("--file", dest="input_file", required=True)
     parser.add_argument("--width", dest="width", required=True)
@@ -46,7 +73,7 @@ def parse_arg():
     if input_type == "na":
         print("Check your input file type")
         return
-    elif input_type == "img":
+    if input_type == "img":
         convert_img(input_file, args.width, args.out, args.style, "result/")
     else:
         if input_type == "video":
