@@ -1,7 +1,8 @@
 # fun-with-ascii-art
 Convert images and videos to ascii art!
 
-You can either print the result to terminal or to an html/video file.
+<img src="src/intro.png" alt="sample image (monalisa)" width="600"/>
+
 <br />
 <br />
 
