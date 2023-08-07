@@ -74,6 +74,10 @@ class AsciiConverter:
                     )
                 case "line":
                     html_file.write("<span>" + alphabet + "</span>")
+                case "underscore":
+                    html_file.write("<span>" + alphabet + "</span>")
+                case "korean":
+                    html_file.write("<span>" + alphabet + "</span>")
                 case "emoji":
                     html_file.write("<span>&#" + alphabet + "</span>")
                 case "color":

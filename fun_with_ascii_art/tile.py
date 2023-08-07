@@ -79,9 +79,11 @@ class Tile:
                 return tables.default(self.check)
             case "color":
                 return tables.default(self.check)
-            case "test":
-                return tables.test(self.check)
             case "line":
                 return tables.line(self.check)
+            case "underscore":
+                return tables.line2(self.check)
+            case "korean":
+                return tables.korean(self.check)
             case "emoji":
                 return tables.emoji(self.check)

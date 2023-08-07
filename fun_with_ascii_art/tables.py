@@ -57,20 +57,6 @@ def default(check: list):
     return result
 
 
-def test(check: list):
-    """Test table
-
-    Args:
-        check (list): Info of a 2x2 tile
-
-    Returns:
-        str: ASCII letter
-    """
-    if check == [1, 1, 1, 1]:
-        return "&nbsp;"
-    return "8"
-
-
 def korean(check: list):
     """Table with korean characters
 

@@ -28,7 +28,7 @@ poetry run python3 fun_with_ascii_art/my_ascii.py --file img/ --width 20 --style
 You need to pass all of the 3 arguments below.
 - file : Either put in a path to a folder that holds files, or a path to a img/video file you want to convert. This package supports `png`, `jpg`, `jpeg`, `mov`, `mp3` and `avi`.
 - width : Desired width (int) of the ascii result. Height will automatically be set according to the original ratio of the img/video.
-- style : Choose the style of ascii you want to convert to. Options are `bw`, `color`, `emoji`, `line` and `terminal`. All except `terminal` will create an html file result if input is an image, and a video result if input is a video. Option `terminal` will print the result to the terminal directly.
+- style : Choose the style of ascii you want to convert to. Options are `bw`, `color`, `emoji`, `line`, `underscore`, `korean` and `terminal`. All except `terminal` will create an html file result if input is an image, and a video result if input is a video. Option `terminal` will print the result to the terminal directly.
 
 <br /> <br />
 ## **Result Examples**
@@ -37,30 +37,29 @@ Below are the results of this sample image. Width set to 30.
 
 <img src="src/monalisa.jpeg" alt="sample image (monalisa.jpeg)" width="200"/>
 
-
 **Terminal**
 
 <img src="src/monalisa_terminal.png" alt="monalisa terminal" width="200"/>
-
-<br /> <br />
 
 **BW (Black and White)**
 
 <img src="src/monalisa_bw.png" alt="monalisa bw" width="200"/>
 
-<br /> <br />
-
 **Color**
 
 <img src="src/monalisa_color.png" alt="monalisa color" width="200"/>
-
-<br /> <br />
 
 **Line**
 
 <img src="src/monalisa_line.png" alt="monalisa line" width="200"/>
 
-<br /> <br />
+**Underscore**
+
+<img src="src/monalisa_underscore.png" alt="monalisa line" width="200"/>
+
+**Korean**
+
+<img src="src/monalisa_korean.png" alt="monalisa korean" width="200"/>
 
 **Emoji**
 

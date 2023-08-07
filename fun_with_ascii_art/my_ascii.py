@@ -23,7 +23,7 @@ from helper import (
     html_to_video,
 )
 
-STYLE = ["bw", "color", "emoji", "line", "test", "four", "replace", "terminal"]
+STYLE = ["bw", "color", "emoji", "line", "underscore", "terminal", "korean"]
 
 
 def convert_img(img_file: str, width: int, style: STYLE, out_dir: str):
