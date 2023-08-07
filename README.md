@@ -1,7 +1,8 @@
 # fun-with-ascii-art
 Convert images and videos to ascii art!
 
-You can either print the result to terminal or to an html/video file.
+<img src="src/intro.png" alt="sample image (monalisa)" width="600"/>
+
 <br />
 <br />
 
@@ -44,8 +45,8 @@ Below are the results of converting *Mona Lisa* with different styles and colors
 | Line | <img src="src/line_color.png" alt="line color" width="120"/> | <img src="src/line_grayscale.png" alt="line grayscale" width="120"/> | <img src="src/line_bw.png" alt="line bw" width="120"/> |
 | Underscore | <img src="src/underscore_color.png" alt="underscore color" width="120"/> | <img src="src/underscore_grayscale.png" alt="underscore grayscale" width="120"/> | <img src="src/underscore_bw.png" alt="underscore bw" width="120"/> |
 | Korean | <img src="src/korean_color.png" alt="korean color" width="120"/> | <img src="src/korean_grayscale.png" alt="korean grayscale" width="120"/> | <img src="src/korean_bw.png" alt="korean bw" width="120"/> |
-| Emoji | <img src="src/monalisa_emoji.png" alt="monalisa emoji" width="120"/> |
-| Terminal | <img src="src/monalisa_terminal.png" alt="monalisa terminal" width="120"/> |
+| Emoji | <img src="src/emoji.png" alt="emoji" width="120"/> |
+| Terminal | <img src="src/terminal.png" alt="terminal" width="120"/> |
 
 
 *You can change the font, line height and so many stuff of the result HTML file to make it more interesting!*
