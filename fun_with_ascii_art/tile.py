@@ -52,13 +52,13 @@ class Tile:
         """
         match self.chosen:
             case 0:
-                print(Fore.BLACK + Style.NORMAL + alphabet, end="")
+                print(Fore.BLACK + Style.NORMAL + alphabet, end=" ")
             case 70:
-                print(Fore.BLACK + Style.BRIGHT + alphabet, end="")
+                print(Fore.BLACK + Style.BRIGHT + alphabet, end=" ")
             case 140:
-                print(Fore.WHITE + Style.NORMAL + alphabet, end="")
+                print(Fore.WHITE + Style.NORMAL + alphabet, end=" ")
             case 210:
-                print(Fore.WHITE + Style.BRIGHT + alphabet, end="")
+                print(Fore.WHITE + Style.BRIGHT + alphabet, end=" ")
         print(Style.RESET_ALL, end="")
 
     def convert_to_char(self, style: str):
