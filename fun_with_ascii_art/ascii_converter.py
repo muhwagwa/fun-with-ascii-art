@@ -108,7 +108,6 @@ class AsciiConverter:
                     )
                 case "emoji":
                     html_file.write("<span>&#" + alphabet + "</span>")
-            
 
         if self.style != "terminal":
             html_file = open(

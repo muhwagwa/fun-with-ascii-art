@@ -27,7 +27,7 @@ STYLE = ["default", "emoji", "line", "underscore", "terminal", "korean"]
 COLOR = ["bw", "grayscale", "color"]
 
 
-def convert_img(img_file: str, width: int, style: STYLE, color:COLOR, out_dir: str):
+def convert_img(img_file: str, width: int, style: STYLE, color: COLOR, out_dir: str):
     """Creates and runs a AsciiConverter
 
     Args:
