@@ -23,6 +23,7 @@ class AsciiConverter:
         input_img (ImageObj): Image file to convert.
         out (str): Desired format of the output file.
         style (str): Desired style of Ascii converting.
+        color (str): Desired color of the result
         out_dir (str): Path to put the output file.
     """
 
@@ -63,6 +64,7 @@ class AsciiConverter:
 
         Args:
             alphabet (str): Alphabet to print to terminal
+            color (int): Color to output to the terminal
         """
         match color:
             case 0:

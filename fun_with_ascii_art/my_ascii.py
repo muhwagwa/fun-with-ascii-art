@@ -34,6 +34,7 @@ def convert_img(img_file: str, width: int, style: STYLE, color: COLOR, out_dir: 
     img_file (str): Path to the image file
     width (int): Desired width of the output
     style (Style): Desired style of Ascii converting
+    color (COLOR): Desired color of the result
     out_dir (str): Path to put the output file
     """
     if img_file.endswith(".png"):

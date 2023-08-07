@@ -50,7 +50,7 @@ def check_input_type(path: str):
             return "img"
         if extension in VIDEO_EXTENSION:
             return "video"
-        return "na"
+        raise TypeError('Check your file type')
     return "folder"
 
 
