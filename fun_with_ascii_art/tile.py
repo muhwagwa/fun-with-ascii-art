@@ -4,10 +4,8 @@
 This file can also be imported as a module and contains the following functions:
 
     * create_check_array : Create an array that holds shape info for a 2x2 tile
-    * print_terminal : Print alphabet to terminal with matching color
     * convert_to_char : Convert 2x2 tile info to ascii char
 """
-from colorama import Fore, Style
 import tables
 
 
@@ -44,23 +42,6 @@ class Tile:
             if elem == self.chosen:
                 self.check[index] = 1
 
-    def print_terminal(self, alphabet: str):
-        """Print alphabet to terminal with matching color
-
-        Args:
-            alphabet (str): Alphabet to print to terminal
-        """
-        match self.chosen:
-            case 0:
-                print(Fore.BLACK + Style.NORMAL + alphabet, end=" ")
-            case 70:
-                print(Fore.BLACK + Style.BRIGHT + alphabet, end=" ")
-            case 140:
-                print(Fore.WHITE + Style.NORMAL + alphabet, end=" ")
-            case 210:
-                print(Fore.WHITE + Style.BRIGHT + alphabet, end=" ")
-        print(Style.RESET_ALL, end="")
-
     def convert_to_char(self, style: str):
         """Convert 2x2 tile info to ascii char
 
@@ -73,16 +54,13 @@ class Tile:
         self.create_check_array()
         match style:
             case "terminal":
-                alphabet = tables.default(self.check)
-                self.print_terminal(alphabet)
-            case "bw":
                 return tables.default(self.check)
-            case "color":
+            case "default":
                 return tables.default(self.check)
             case "line":
                 return tables.line(self.check)
             case "underscore":
-                return tables.line2(self.check)
+                return tables.underscore(self.check)
             case "korean":
                 return tables.korean(self.check)
             case "emoji":

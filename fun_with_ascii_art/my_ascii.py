@@ -23,10 +23,11 @@ from helper import (
     html_to_video,
 )
 
-STYLE = ["bw", "color", "emoji", "line", "underscore", "terminal", "korean"]
+STYLE = ["default", "emoji", "line", "underscore", "terminal", "korean"]
+COLOR = ["bw", "grayscale", "color"]
 
 
-def convert_img(img_file: str, width: int, style: STYLE, out_dir: str):
+def convert_img(img_file: str, width: int, style: STYLE, color:COLOR, out_dir: str):
     """Creates and runs a AsciiConverter
 
     Args:
@@ -39,7 +40,7 @@ def convert_img(img_file: str, width: int, style: STYLE, out_dir: str):
         img_file = png_to_jpg(img_file)
 
     img = ImageObj(img_file, int(width))
-    converter = AsciiConverter(img, style, out_dir)
+    converter = AsciiConverter(img, style, color, out_dir)
     converter.convert()
 
 
@@ -50,24 +51,31 @@ def parse_arg():
     parser = argparse.ArgumentParser(description=description)
 
     parser.add_argument("--file", dest="input_file", required=True)
-    parser.add_argument("--width", dest="width", required=True)
+    parser.add_argument("--width", dest="width", required=True, type=int)
     parser.add_argument(
         "--style",
         dest="style",
         required=True,
         choices=STYLE,
     )
+    parser.add_argument(
+        "--color",
+        dest="color",
+        default="grayscale",
+        choices=COLOR,
+    )
 
     args = parser.parse_args()
 
     input_file = args.input_file
     input_type = check_input_type(args.input_file)
+    input_color = "emoji" if args.style == "emoji" else args.color
 
     if input_type == "na":
         print("Check your input file type")
         return
     if input_type == "img":
-        convert_img(input_file, args.width, args.style, "result/")
+        convert_img(input_file, args.width, args.style, input_color, "result/")
     else:
         if input_type == "video":
             video_to_frames(input_file)
@@ -82,7 +90,7 @@ def parse_arg():
         for file in files:
             filename = input_file + file
             print("Converting " + filename + " to ascii.")
-            convert_img(filename, args.width, args.style, destination)
+            convert_img(filename, args.width, args.style, input_color, destination)
 
         if input_type == "video":
             html_to_video(input_file[:-1] + "_ascii/")
