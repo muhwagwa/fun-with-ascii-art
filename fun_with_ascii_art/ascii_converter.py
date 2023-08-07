@@ -4,10 +4,12 @@ Converts an image to Ascii format.
 This file can also be imported as a module and contains the following functions:
 
     * convert : Preprocess the image and then output the ascii version
+    * print_terminal : Print alphabet to terminal with matching color
     * write_ascii : Writes the result ascii to terminal or an html file
 """
 import numpy as np
 from PIL import Image, ImageOps
+from colorama import Fore, Style
 
 from tile import Tile
 from image_obj import ImageObj
@@ -21,12 +23,14 @@ class AsciiConverter:
         input_img (ImageObj): Image file to convert.
         out (str): Desired format of the output file.
         style (str): Desired style of Ascii converting.
+        color (str): Desired color of the result
         out_dir (str): Path to put the output file.
     """
 
-    def __init__(self, input_img: ImageObj, style: str, out_dir: str):
+    def __init__(self, input_img: ImageObj, style: str, color: str, out_dir: str):
         self.input_img = input_img
         self.style = style
+        self.color = color
         self.out_dir = out_dir
 
     def convert(self):
@@ -55,12 +59,32 @@ class AsciiConverter:
 
         self.write_ascii()
 
+    def print_terminal(self, alphabet: str, color: int):
+        """Print alphabet to terminal with matching color
+
+        Args:
+            alphabet (str): Alphabet to print to terminal
+            color (int): Color to output to the terminal
+        """
+        match color:
+            case 0:
+                print(Fore.BLACK + Style.NORMAL + alphabet, end=" ")
+            case 70:
+                print(Fore.BLACK + Style.BRIGHT + alphabet, end=" ")
+            case 140:
+                print(Fore.WHITE + Style.NORMAL + alphabet, end=" ")
+            case 210:
+                print(Fore.WHITE + Style.BRIGHT + alphabet, end=" ")
+        print(Style.RESET_ALL, end="")
+
     def write_ascii(self):
         """Writes the result ascii to terminal or an html file"""
 
         def write_html_line():
-            match self.style:
+            match self.color:
                 case "bw":
+                    html_file.write("<span>" + alphabet + "</span>")
+                case "grayscale":
                     html_file.write(
                         '<span style="color: rgb('
                         + str(tile.chosen)
@@ -72,10 +96,6 @@ class AsciiConverter:
                         + str(alphabet)
                         + "</span>"
                     )
-                case "line":
-                    html_file.write("<span>" + alphabet + "</span>")
-                case "emoji":
-                    html_file.write("<span>&#" + alphabet + "</span>")
                 case "color":
                     html_file.write(
                         '<span style="color: rgb('
@@ -88,6 +108,8 @@ class AsciiConverter:
                         + str(alphabet)
                         + "</span>"
                     )
+                case "emoji":
+                    html_file.write("<span>&#" + alphabet + "</span>")
 
         if self.style != "terminal":
             html_file = open(
@@ -113,7 +135,7 @@ class AsciiConverter:
                         tile = Tile(input_array)
                         alphabet = tile.convert_to_char(self.style)
 
-                        if self.style == "color":
+                        if self.color == "color":
                             color_array = [
                                 self.input_img.color_numpy[row_num][col_num],
                                 self.input_img.color_numpy[row_num][col_num + 1],
@@ -133,7 +155,9 @@ class AsciiConverter:
                                             break
                                         color[index] += color_value / tile.max_frequency
 
-                        if self.style != "terminal":
+                        if self.style == "terminal":
+                            self.print_terminal(alphabet, tile.chosen)
+                        else:
                             write_html_line()
 
                 if self.style == "terminal":

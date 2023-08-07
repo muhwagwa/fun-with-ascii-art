@@ -5,10 +5,9 @@ This file can also be imported as a module and contains the following
 functions:
 
     * default : default table
-    * test : test table
     * korean : table with korean characters
     * line : line table with horizontal, vertical and diagonal lines
-    * line2 : line table with '_' only
+    * underscore : line table with '_' only
     * emoji : apple emoji table
 """
 
@@ -55,20 +54,6 @@ def default(check: list):
         case [1, 1, 1, 1]:
             result = "@"
     return result
-
-
-def test(check: list):
-    """Test table
-
-    Args:
-        check (list): Info of a 2x2 tile
-
-    Returns:
-        str: ASCII letter
-    """
-    if check == [1, 1, 1, 1]:
-        return "&nbsp;"
-    return "8"
 
 
 def korean(check: list):
@@ -159,7 +144,7 @@ def line(check: list):
     return result
 
 
-def line2(check: list):
+def underscore(check: list):
     """Line table with '_' only
 
     Args:
