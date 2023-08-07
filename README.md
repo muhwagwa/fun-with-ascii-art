@@ -35,32 +35,36 @@ You need to pass all of the 3 arguments below.
 ---
 Below are the results of this sample image. Width set to 30.
 
-<img src="img/flower.jpeg" alt="drawing" width="400"/>
+<img src="src/monalisa.jpeg" alt="sample image (monalisa.jpeg)" width="200"/>
 
 
 **Terminal**
-```
-TBD
-```
+
+<img src="src/monalisa_terminal.png" alt="monalisa terminal" width="200"/>
+
+<br /> <br />
 
 **BW (Black and White)**
 
-TBD
+<img src="src/monalisa_bw.png" alt="monalisa bw" width="200"/>
+
 <br /> <br />
 
 **Color**
 
-TBD
-<br /> <br />
+<img src="src/monalisa_color.png" alt="monalisa color" width="200"/>
 
-**Emoji**
-
-TBD
 <br /> <br />
 
 **Line**
 
-TBD
+<img src="src/monalisa_line.png" alt="monalisa line" width="200"/>
+
+<br /> <br />
+
+**Emoji**
+
+<img src="src/monalisa_emoji.png" alt="monalisa emoji" width="200"/>
 
 
 *You can change the font, line height and so many stuff of the result HTML file to make it more interesting!*
