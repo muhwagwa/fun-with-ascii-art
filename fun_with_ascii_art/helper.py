@@ -18,6 +18,7 @@ from PIL import Image
 from pytube import YouTube
 import imgkit
 from constants import IMG_EXTENSION, VIDEO_EXTENSION
+from exceptions import raise_file_doesnt_exist, raise_invalid_file_type
 
 
 def png_to_jpg(img_file: str):
@@ -42,15 +43,17 @@ def check_input_type(path: str):
         path (str): Path to an input file
 
     Returns:
-        ["img", "video", "na", "folder"]: Type of the input file
+        ["img", "video", "folder"]: Type of the input file
     """
+    if not os.path.exists(path):
+        raise_file_doesnt_exist(path)
     if os.path.isfile(path):
         extension = path.split(".")[-1]
         if extension in IMG_EXTENSION:
             return "img"
         if extension in VIDEO_EXTENSION:
             return "video"
-        raise TypeError('Check your file type')
+        raise_invalid_file_type(path)
     return "folder"
 
 
