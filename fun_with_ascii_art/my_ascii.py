@@ -58,11 +58,11 @@ def convert_video(video_file: str, width: int, style: STYLE, color: COLOR):
     style (Style): Desired style of Ascii converting
     color (COLOR): Desired color of the result
     """
-    video_to_frames(video_file)
+    fps = video_to_frames(video_file)
     frame_folder = get_file_name(video_file, "result/", "_frame/")
     frame_ascii_folder = frame_folder[:-1] + "_ascii/"
     convert_folder(frame_folder, width, style, color, frame_ascii_folder)
-    html_to_video(frame_ascii_folder)
+    html_to_video(frame_ascii_folder, fps)
 
 
 def convert_folder(

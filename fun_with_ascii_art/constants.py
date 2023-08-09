@@ -11,7 +11,7 @@ This file can also be imported as a module and contains the following constants:
 
 
 IMG_EXTENSION = ["png", "jpg", "jpeg"]
-VIDEO_EXTENSION = ["mov", "mp3", "avi"]
+VIDEO_EXTENSION = ["mov", "mp4", "avi"]
 HEADER = """
         <!DOCTYPE html>
         <html>
