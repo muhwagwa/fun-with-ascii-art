@@ -88,6 +88,7 @@ def video_to_frames(video_file: str):
         video_file (str): Path to a video file
     """
     vidcap = cv2.VideoCapture(video_file)
+    fps = vidcap.get(cv2.CAP_PROP_FPS)
     success, image = vidcap.read()
     count = 0
     folder_path = get_file_name(video_file, "result/", "_frame/")
@@ -95,30 +96,34 @@ def video_to_frames(video_file: str):
 
     while success:
         if count % 4 == 0:
-            # save frame as JPEG file
-            cv2.imwrite(f"{folder_path}{count}.jpg", image)
+            # save frame as JPG file
+            cv2.imwrite(f"{folder_path}{count : 05d}.jpg", image)
         success, image = vidcap.read()
         print("Read a new frame: ", success)
         count += 1
+    return fps
 
 
-def html_to_video(folder: str):
+def html_to_video(folder: str, fps):
     """Converts html ascii files into a video
 
     Args:
         folder (str): Path to a folder
+        fps (num): fps of the input video
     """
     img_array = []
-    for filename in glob.glob(folder + "*.html"):
+    filelist = glob.glob(folder + "*.html")
+    filelist.sort()
+    for filename in filelist:
         img_file = filename.split(".")[0] + ".jpg"
         imgkit.from_file(filename, img_file)
         img = cv2.imread(img_file)
         img_array.append(img)
 
-    size = (img_array[0].shape[0], img_array[0].shape[1])
+    size = (img_array[0].shape[1], img_array[0].shape[0])
 
     out = cv2.VideoWriter(
-        "result/project.avi", cv2.VideoWriter_fourcc(*"DIVX"), 15, size
+        "result/project.avi", cv2.VideoWriter_fourcc(*"MJPG"), int(fps / 4), size
     )
 
     for img in img_array:
